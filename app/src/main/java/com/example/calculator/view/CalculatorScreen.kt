@@ -1,4 +1,4 @@
-package com.example.calculator
+package com.example.calculator.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CalculatorTheme {
-               
+
             }
         }
     }
