@@ -41,17 +41,28 @@ class CalculatorViewModel : ViewModel() {
 
     val calculatorState: State<CalculatorState> = _calculatorState
 
-    fun appendInput(input: String) {
+    fun onButtonClicked(buttonText: String) {
+        when {
+            buttonText in listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".") -> appendInput(buttonText)
+            buttonText in listOf("+", "-", "*", "/") -> appendOperator(buttonText)
+            buttonText == "=" -> calculateResult()
+        }
+    }
+
+    private fun appendInput(input: String) {
         _calculatorState.value = _calculatorState.value.copy(input = _calculatorState.value.input + input)
     }
 
-    fun clearInput() {
-        _calculatorState.value = _calculatorState.value.copy(input = "")
+    private fun appendOperator(operator: String) {
+        if (_calculatorState.value.input.isNotEmpty() && _calculatorState.value.input.last().toString() !in listOf("+", "-", "*", "/")) {
+            _calculatorState.value = _calculatorState.value.copy(input = _calculatorState.value.input + " $operator ")
+        }
     }
 
-    fun calculateResult() {
+    private fun calculateResult() {
         val result = calculatorRepository.calculateResult(_calculatorState.value.input)
         _calculatorState.value = _calculatorState.value.copy(result = result, input = "")
     }
 }
+
 
