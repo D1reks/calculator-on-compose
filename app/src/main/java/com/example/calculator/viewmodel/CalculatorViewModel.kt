@@ -1,5 +1,11 @@
 package com.example.calculator.viewmodel
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import com.example.calculator.model.CalculatorState
+import com.example.calculator.repo.CalculatorRepository
+
 
 interface Operation {
     fun executeOperation(num1: Double, num2: Double): Double
@@ -29,30 +35,23 @@ class DivisionOperation : Operation {
     }
 }
 
-class Calculator {
-    private val operations = mapOf(
-        "+" to AdditionOperation(),
-        "-" to SubtractionOperation(),
-        "*" to MultiplicationOperation(),
-        "/" to DivisionOperation()
-    )
+class CalculatorViewModel : ViewModel() {
+    private val calculatorRepository = CalculatorRepository()
+    private val _calculatorState = mutableStateOf(CalculatorState())
 
-    fun calculateResult(input: String): Double {
-        val parts = input.trim().split(" ")
+    val calculatorState: State<CalculatorState> = _calculatorState
 
-        if (parts.size != 3) {
-            return input.toDouble()
-        }
+    fun appendInput(input: String) {
+        _calculatorState.value = _calculatorState.value.copy(input = _calculatorState.value.input + input)
+    }
 
-        val num1 = parts[0].toDouble()
-        val operator = parts[1]
-        val num2 = parts[2].toDouble()
+    fun clearInput() {
+        _calculatorState.value = _calculatorState.value.copy(input = "")
+    }
 
-        val operation = operations[operator] ?: return Double.NaN
-
-        return operation.executeOperation(num1, num2)
+    fun calculateResult() {
+        val result = calculatorRepository.calculateResult(_calculatorState.value.input)
+        _calculatorState.value = _calculatorState.value.copy(result = result, input = "")
     }
 }
-
-
 
