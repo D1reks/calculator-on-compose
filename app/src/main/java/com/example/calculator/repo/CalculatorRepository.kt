@@ -1,25 +1,25 @@
 package com.example.calculator.repo
 
 class CalculatorRepository {
-    fun calculateResult(input: String): Double {
-        val parts = input.trim().split(" ")
+    fun calculateResult(userInput: String): Double {
+        val partsOfUserInput = userInput.trim().split(" ")
 
-        if (parts.size != 3) {
-            return input.toDouble()
+        if (partsOfUserInput.size != 3) {
+            return userInput.toDouble()
         }
 
-        val num1 = parts[0].toDouble()
-        val operator = parts[1]
-        val num2 = parts[2].toDouble()
+        val inputNumber1 = partsOfUserInput[0].toDouble()
+        val userOperator = partsOfUserInput[1]
+        val inputNumber2 = partsOfUserInput[2].toDouble()
 
-        val result = when (operator) {
-            "+" -> num1 + num2
-            "-" -> num1 - num2
-            "*" -> num1 * num2
-            "/" -> num1 / num2
+        val calculatedResult = when (userOperator) {
+            "+" -> inputNumber1 + inputNumber2
+            "-" -> inputNumber1 - inputNumber2
+            "*" -> inputNumber1 * inputNumber2
+            "/" -> inputNumber1 / inputNumber2
             else -> Double.NaN
         }
 
-        return result
+        return calculatedResult
     }
     }

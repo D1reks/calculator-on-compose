@@ -20,17 +20,17 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
     ) {
         Text(text = "Result: ${calculatorViewModel.calculatorState.value.result}")
 
-        val buttonRows = listOf(
+        val calculatorButtons = listOf(
             listOf("7", "8", "9", "/"),
             listOf("4", "5", "6", "*"),
             listOf("1", "2", "3", "-"),
             listOf("0", ".", "=", "+")
         )
 
-        buttonRows.forEach { row ->
+        calculatorButtons.forEach { row ->
             Row {
                 row.forEach { buttonText ->
-                    CalculatorButton(text = buttonText, color = Color.Gray) {
+                    CalculatorButton(buttonText = buttonText, buttonColor = Color.Gray) {
                         calculatorViewModel.onButtonClicked(buttonText)
                     }
                 }
@@ -40,12 +40,12 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
 }
 
 @Composable
-fun CalculatorButton(text: String, color: Color, onClick: () -> Unit) {
+fun CalculatorButton(buttonText: String, buttonColor: Color, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(backgroundColor = color),
+        colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor),
         modifier = Modifier.padding(8.dp)
     ) {
-        Text(text = text, color = Color.Red)
+        Text(text = buttonText, color = Color.Red)
     }
 }
